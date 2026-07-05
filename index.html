@@ -89,9 +89,8 @@
     .about-grid { display: grid; grid-template-columns: auto 1fr; gap: 3.5rem; align-items: start; }
     .about-avatar {
       width: 180px; height: 180px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 4.5rem; box-shadow: 0 0 0 6px rgba(108,99,255,0.15);
+      object-fit: cover; display: block;
+      box-shadow: 0 0 0 4px var(--accent), 0 0 0 10px rgba(108,99,255,0.15);
       flex-shrink: 0;
     }
     .about-text h3 { font-size: 1.35rem; margin-bottom: 0.8rem; }
@@ -120,10 +119,7 @@
     .exp-org { font-weight: 700; font-size: 1rem; color: var(--text); }
     .exp-date { font-size: 0.8rem; color: var(--accent2); font-weight: 600; white-space: nowrap; }
     .exp-role { color: var(--muted); font-size: 0.88rem; margin-bottom: 0.8rem; }
-    .exp-card ul { padding-left: 1.2rem; }
-    .exp-card li { color: var(--muted); font-size: 0.87rem; margin-bottom: 0.3rem; }
-    .exp-card li::marker { color: var(--accent); }
-    .exp-highlight { color: var(--accent2) !important; font-weight: 600; }
+    .exp-desc { color: var(--muted); font-size: 0.87rem; }
 
     /* ── Education ── */
     .timeline { position: relative; }
@@ -157,6 +153,8 @@
     .pub-card h3 { font-size: 0.92rem; margin-bottom: 0.2rem; line-height: 1.45; }
     .pub-card p { color: var(--muted); font-size: 0.82rem; }
     .pub-status { display: inline-block; margin-top: 0.3rem; font-size: 0.75rem; color: var(--accent); font-weight: 600; }
+    .pub-link { display: inline-block; margin-top: 0.45rem; font-size: 0.78rem; color: var(--accent2); font-weight: 600; border: 1px solid rgba(0,212,170,0.25); padding: 0.15rem 0.7rem; border-radius: 6px; transition: border-color 0.2s; }
+    .pub-link:hover { border-color: var(--accent2); }
 
     /* ── Blog ── */
     .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.4rem; }
@@ -242,7 +240,7 @@
 <section id="about">
   <div class="container">
     <div class="about-grid fade-up">
-      <div class="about-avatar">👨‍🔬</div>
+      <img class="about-avatar" src="profile.jpg" alt="Sunny Raghav" />
       <div>
         <div class="section-label">About Me</div>
         <h2 class="section-title">Who I Am</h2>
@@ -306,12 +304,7 @@
           <div class="exp-date">Apr 2024 – Present</div>
         </div>
         <div class="exp-role">PhD Researcher · Brussels, Belgium</div>
-        <ul>
-          <li>Developing and validating a custom high-speed reactive-flow solver (OpenFOAM + Cantera) for multi-fuel RDE simulations, implementing Euler/viscous, species-transport, and energy equations with detailed finite-rate chemistry.</li>
-          <li>Running large-scale parallel RDE simulations on HPC clusters (AMD EPYC) with optimised domain decomposition for multi-million-cell cases.</li>
-          <li>Validating detonation structure and performance against experimental/numerical benchmarks; built Python post-processing pipelines for probe data, residuals, and spectral analysis.</li>
-          <li>Improved solver wall-clock performance by <span class="exp-highlight">~28%</span> through compiler/build optimisation and dependency rebuilds.</li>
-        </ul>
+        <p class="exp-desc">Developing a custom high-speed reactive-flow solver coupling OpenFOAM with Cantera for multi-fuel rotating detonation engine simulations, and running large-scale parallel cases on HPC clusters — validating detonation structure and performance against experimental and numerical benchmarks.</p>
       </div>
 
       <div class="exp-card fade-up">
@@ -320,9 +313,7 @@
           <div class="exp-date">Oct 2023 – Mar 2024</div>
         </div>
         <div class="exp-role">CFD Intern · Stuttgart, Germany</div>
-        <ul>
-          <li>Developed an automation script for the rear cooling-fan simulation workflow, achieving a <span class="exp-highlight">30% reduction</span> in time-to-completion.</li>
-        </ul>
+        <p class="exp-desc">Automated the rear cooling-fan CFD simulation workflow, substantially cutting turnaround time for vehicle thermal-management studies.</p>
       </div>
 
       <div class="exp-card fade-up">
@@ -331,11 +322,7 @@
           <div class="exp-date">Jun 2022 – Sep 2023</div>
         </div>
         <div class="exp-role">Research Assistant · Dresden, Germany</div>
-        <ul>
-          <li>Performed data analysis on Particle-in-Cell (PIC) simulation results, <span class="exp-highlight">improving accuracy by 20%</span>.</li>
-          <li>Enhanced data quality and usability for downstream analysis through diverse preprocessing techniques.</li>
-          <li>Reduced compute time by <span class="exp-highlight">60%</span> by optimising transfer-learning techniques in neural-network models.</li>
-        </ul>
+        <p class="exp-desc">Analysed particle-in-cell (PIC) simulation data and applied transfer learning to neural-network models, sharply reducing training time while improving data quality for downstream analysis.</p>
       </div>
 
       <div class="exp-card fade-up">
@@ -344,10 +331,7 @@
           <div class="exp-date">Dec 2021 – Jun 2022</div>
         </div>
         <div class="exp-role">Research Assistant · Dresden, Germany</div>
-        <ul>
-          <li>Pre-processed raw fermentation-process data using Fourier transform, Standard Normal Variate, and B-spline methods.</li>
-          <li>Conducted a literature survey on feature engineering and ML algorithms to predict the sporulation process.</li>
-        </ul>
+        <p class="exp-desc">Worked on machine learning for bioprocess monitoring — preparing fermentation-process data and exploring feature-engineering approaches to predict sporulation.</p>
       </div>
 
       <div class="exp-card fade-up">
@@ -356,9 +340,7 @@
           <div class="exp-date">May 2017 – Oct 2017</div>
         </div>
         <div class="exp-role">Product Design Engineer · Gaydon, UK</div>
-        <ul>
-          <li>Designed underbody plastic components and standardised parts across projects for efficient assembly on a shared platform.</li>
-        </ul>
+        <p class="exp-desc">Designed underbody plastic components and standardised parts across projects for efficient assembly on a shared vehicle platform.</p>
       </div>
 
       <div class="exp-card fade-up">
@@ -367,10 +349,7 @@
           <div class="exp-date">Dec 2015 – May 2017</div>
         </div>
         <div class="exp-role">Assistant Manager · Gurgaon, India</div>
-        <ul>
-          <li>Used Siemens NX for design, strength calculations, and FE modelling of BIW front-structure and exterior plastic parts.</li>
-          <li>Led testing, root-cause/failure analysis, yield improvement, and supplier selection.</li>
-        </ul>
+        <p class="exp-desc">Designed and analysed BIW front-structure and exterior plastic parts in Siemens NX, and led testing, failure analysis, and supplier selection.</p>
       </div>
 
       <div class="exp-card fade-up">
@@ -379,10 +358,7 @@
           <div class="exp-date">Jan 2013 – Dec 2015</div>
         </div>
         <div class="exp-role">Senior Design Engineer · Pune, India</div>
-        <ul>
-          <li>Designed underbody sheet-metal parts in coordination with TTL UK and Jaguar Land Rover, UK.</li>
-          <li>Conducted competitor benchmarking and CAE interpretation/analysis for design review and optimisation.</li>
-        </ul>
+        <p class="exp-desc">Designed underbody sheet-metal parts in coordination with TTL UK and Jaguar Land Rover, supported by competitor benchmarking and CAE-driven design reviews.</p>
       </div>
     </div>
   </div>
@@ -395,6 +371,15 @@
     <h2 class="section-title fade-up">Academic Background</h2>
     <div class="divider fade-up"></div>
     <div class="timeline">
+      <div class="tl-item fade-up">
+        <div class="tl-dot">🔬</div>
+        <div class="tl-content">
+          <div class="tl-year">Apr 2024 – Present</div>
+          <h3>Ph.D. — Engineering Sciences (ongoing)</h3>
+          <div class="inst">von Karman Institute for Fluid Dynamics &amp; Université libre de Bruxelles (ULB) · Belgium</div>
+          <p>Doctoral research on high-fidelity reactive-flow solvers for rotating detonation engine simulation — OpenFOAM–Cantera coupling, detailed finite-rate chemistry, and large-scale HPC.</p>
+        </div>
+      </div>
       <div class="tl-item fade-up">
         <div class="tl-dot">🎓</div>
         <div class="tl-content">
@@ -504,6 +489,23 @@
         <div>
           <h3>"2D Simulation within a Rotating Detonation Engine"</h3>
           <p>Ascension Conference 2023</p>
+          <a class="pub-link" href="Ascension_Raghav.pdf" target="_blank">📄 Read the paper (PDF)</a>
+        </div>
+      </div>
+      <div class="pub-card fade-up">
+        <div class="pub-year">2023</div>
+        <div>
+          <h3>"2D Premixed Combustion in a Rotating Detonation Engine" — Master Thesis</h3>
+          <p>M.Sc. Computational Modeling and Simulation · Technical University Dresden</p>
+          <a class="pub-link" href="MasterThesis.pdf" target="_blank">📄 Read the thesis (PDF)</a>
+        </div>
+      </div>
+      <div class="pub-card fade-up">
+        <div class="pub-year">2023</div>
+        <div>
+          <h3>"Physics-Informed Neural Networks for Cleaning Process Modelling" — Research Report</h3>
+          <p>Applied PINNs to accelerate diffusion-equation solutions for cleaning-process simulation.</p>
+          <a class="pub-link" href="PINN_Research_Report.pdf" target="_blank">📄 Read the report (PDF)</a>
         </div>
       </div>
       <div class="pub-card fade-up">
