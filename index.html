@@ -67,7 +67,11 @@
       position: relative; overflow: hidden;
     }
     #flow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-    .hero-inner { max-width: 760px; position: relative; z-index: 1; }
+    .hero-inner {
+      max-width: 1080px; width: 100%; position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem;
+      align-items: center; text-align: left;
+    }
     .hero-overline {
       color: var(--accent); font-size: 0.82rem; font-weight: 700;
       letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1.4rem;
@@ -75,17 +79,17 @@
     }
     .caret { display: inline-block; width: 2px; height: 0.95em; background: var(--accent); margin-left: 3px; vertical-align: text-bottom; animation: blink 1s step-end infinite; }
     @keyframes blink { 50% { opacity: 0; } }
-    #hero h1 { font-family: var(--serif); font-size: clamp(2.4rem, 6vw, 3.7rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; }
+    #hero h1 { font-family: var(--serif); font-size: clamp(2.2rem, 4.5vw, 3.2rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; }
     .accent-text { color: var(--accent); }
-    #hero p { font-size: 1.05rem; color: var(--muted); max-width: 600px; margin: 0 auto 2.2rem; }
-    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    #hero p { font-size: 1.02rem; color: var(--muted); max-width: 600px; margin: 0 0 2.2rem; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: flex-start; flex-wrap: wrap; }
     .btn { padding: 0.7rem 1.7rem; border-radius: 4px; font-size: 0.93rem; font-weight: 600; cursor: pointer; transition: background 0.15s, border-color 0.15s, transform 0.2s, box-shadow 0.2s; display: inline-block; }
     .btn:hover { transform: translateY(-2px); }
     .btn-primary { background: var(--accent); color: #fff; }
     .btn-primary:hover { background: var(--accent-dark); box-shadow: 0 8px 20px rgba(29,78,216,0.25); }
     .btn-outline { background: rgba(255,255,255,0.7); color: var(--text); border: 1px solid #c9d1dc; }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-    .hero-pills { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; margin-top: 2.4rem; }
+    .hero-pills { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: flex-start; margin-top: 2.4rem; }
     .hero-pill {
       background: rgba(246,248,250,0.85); border: 1px solid var(--border);
       padding: 0.25rem 0.75rem; border-radius: 3px; font-size: 0.78rem; color: var(--muted);
@@ -94,6 +98,15 @@
     .hero-pill:nth-child(2n) { animation-delay: -1.4s; animation-duration: 6s; }
     .hero-pill:nth-child(3n) { animation-delay: -2.8s; animation-duration: 7s; }
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    .hero-viz { background: #0c1322; border: 1px solid #223052; border-radius: 12px; padding: 1rem 1rem 0.65rem; box-shadow: 0 24px 60px rgba(13,20,38,0.28); }
+    .hero-viz canvas { width: 100%; height: 340px; display: block; border-radius: 6px; }
+    .viz-caption { color: #8fa0bd; font-size: 0.72rem; text-align: center; padding-top: 0.6rem; letter-spacing: 0.04em; }
+    @media (max-width: 980px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+      .hero-btns, .hero-pills { justify-content: center; }
+      .hero-viz { max-width: 440px; width: 100%; margin: 0 auto; }
+      .hero-viz canvas { height: 300px; }
+    }
     .scroll-down {
       position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
       width: 26px; height: 42px; border: 2px solid #b6c0cf; border-radius: 14px;
@@ -173,6 +186,11 @@
     .tl-content p { color: var(--muted); font-size: 0.85rem; }
 
     /* ── Projects ── */
+    .sim-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.4rem; margin-bottom: 2.6rem; }
+    .sim-gallery figure { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s; }
+    .sim-gallery figure:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(26,34,47,0.10); }
+    .sim-gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: contain; display: block; background: #fff; padding: 0.6rem; }
+    .sim-gallery figcaption { padding: 0.75rem 1.1rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--border); }
     .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.4rem; }
     .project-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 1.5rem; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s; }
     .project-card:hover { transform: translateY(-6px); box-shadow: 0 14px 32px rgba(26,34,47,0.10); }
@@ -278,20 +296,26 @@
 <section id="hero">
   <canvas id="flow" aria-hidden="true"></canvas>
   <div class="hero-inner">
-    <div class="hero-overline"><span id="typed">PhD Researcher · CFD · Machine Learning · HPC</span><span class="caret" id="caret" style="display:none;" aria-hidden="true"></span></div>
-    <h1>Hi, I'm <span class="accent-text">Sunny Raghav</span></h1>
-    <p>Computational engineer and PhD researcher at the von Karman Institute for Fluid Dynamics, specialising in high-fidelity CFD, reactive-flow simulation, and large-scale HPC — bridging deep simulation expertise with practical machine learning.</p>
-    <div class="hero-btns">
-      <a href="#projects" class="btn btn-primary">View My Research</a>
-      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    <div class="hero-copy">
+      <div class="hero-overline"><span id="typed">PhD Researcher · CFD · Machine Learning · HPC</span><span class="caret" id="caret" style="display:none;" aria-hidden="true"></span></div>
+      <h1>Hi, I'm <span class="accent-text">Sunny Raghav</span></h1>
+      <p>Computational engineer and PhD researcher at the von Karman Institute for Fluid Dynamics, specialising in high-fidelity CFD, reactive-flow simulation, and large-scale HPC — bridging deep simulation expertise with practical machine learning.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-primary">View My Research</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-pills">
+        <span class="hero-pill">OpenFOAM</span>
+        <span class="hero-pill">Cantera</span>
+        <span class="hero-pill">PyTorch</span>
+        <span class="hero-pill">HPC / AMD EPYC</span>
+        <span class="hero-pill">PINNs</span>
+        <span class="hero-pill">Rotating Detonation Engines</span>
+      </div>
     </div>
-    <div class="hero-pills">
-      <span class="hero-pill">OpenFOAM</span>
-      <span class="hero-pill">Cantera</span>
-      <span class="hero-pill">PyTorch</span>
-      <span class="hero-pill">HPC / AMD EPYC</span>
-      <span class="hero-pill">PINNs</span>
-      <span class="hero-pill">Rotating Detonation Engines</span>
+    <div class="hero-viz">
+      <canvas id="rde" role="img" aria-label="Animated visualisation of a rotating detonation wave in an annular chamber"></canvas>
+      <div class="viz-caption">Rotating detonation wave — stylised live visualisation of my research topic</div>
     </div>
   </div>
   <a href="#about" class="scroll-down" aria-label="Scroll down"><span></span></a>
@@ -482,6 +506,16 @@
     <div class="section-label fade-up">Projects</div>
     <h2 class="section-title fade-up">Key Research &amp; Engineering Work</h2>
     <div class="divider fade-up"></div>
+    <div class="sim-gallery">
+      <figure class="fade-up">
+        <img src="rde_temperature.png" alt="Temperature field in an annular RDE chamber with cross-section slices" loading="lazy" />
+        <figcaption>Temperature field in an annular RDE chamber with cross-section slices — ANSYS simulation</figcaption>
+      </figure>
+      <figure class="fade-up">
+        <img src="rde_mach.png" alt="Mach number field in an annular RDE chamber during injection" loading="lazy" />
+        <figcaption>Mach number distribution during injection — ANSYS simulation</figcaption>
+      </figure>
+    </div>
     <div class="projects-grid">
       <div class="project-card fade-up">
         <h3>Master Thesis — 2D Premixed Combustion in a Rotating Detonation Engine</h3>
@@ -643,7 +677,7 @@
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
   // Staggered scroll reveal
-  const staggerParents = document.querySelectorAll('.skills-grid, .exp-list, .projects-grid, .pub-list, .blog-grid, .timeline');
+  const staggerParents = document.querySelectorAll('.skills-grid, .exp-list, .projects-grid, .pub-list, .blog-grid, .timeline, .sim-gallery');
   staggerParents.forEach(parent => {
     [...parent.children].forEach((child, i) => {
       if (child.classList.contains('fade-up')) child.style.transitionDelay = Math.min(i * 90, 450) + 'ms';
@@ -738,14 +772,14 @@
     }
     function step() {
       if (!running) return;
-      ctx.fillStyle = 'rgba(255,255,255,0.05)';
+      ctx.fillStyle = 'rgba(255,255,255,0.04)';
       ctx.fillRect(0, 0, W, H);
-      ctx.lineWidth = 1.1;
+      ctx.lineWidth = 1.3;
       for (const p of particles) {
         const a = (Math.sin(p.x * 0.0021 + t) + Math.cos(p.y * 0.0023 - t * 0.7)) * 1.9;
         const nx = p.x + Math.cos(a) * 1.15;
         const ny = p.y + Math.sin(a) * 1.15;
-        ctx.strokeStyle = p.blue ? 'rgba(29,78,216,0.14)' : 'rgba(91,100,115,0.10)';
+        ctx.strokeStyle = p.blue ? 'rgba(29,78,216,0.22)' : 'rgba(91,100,115,0.15)';
         ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(nx, ny); ctx.stroke();
         p.x = nx; p.y = ny; p.life--;
         if (p.life <= 0 || p.x < -10 || p.x > W + 10 || p.y < -10 || p.y > H + 10) Object.assign(p, spawn());
@@ -763,6 +797,93 @@
     resize();
     step();
   }
+
+  // Rotating detonation wave visualisation (hero panel)
+  (function () {
+    const rde = document.getElementById('rde');
+    if (!rde) return;
+    const c = rde.getContext('2d');
+    const dpr2 = Math.min(window.devicePixelRatio || 1, 2);
+    let RW = 0, RH = 0, th = -Math.PI / 2, rdeRunning = false, rdeRaf = null;
+    const stops = [
+      [0.00, [20, 28, 62]],
+      [0.16, [40, 40, 96]],
+      [0.36, [122, 32, 84]],
+      [0.56, [198, 46, 40]],
+      [0.76, [255, 122, 40]],
+      [0.90, [255, 200, 82]],
+      [1.00, [255, 247, 205]]
+    ];
+    function cmap(v) {
+      v = Math.max(0, Math.min(1, v));
+      for (let i = 1; i < stops.length; i++) {
+        if (v <= stops[i][0]) {
+          const f = (v - stops[i - 1][0]) / (stops[i][0] - stops[i - 1][0]);
+          const a = stops[i - 1][1], b = stops[i][1];
+          return 'rgb(' + a.map((x, j) => Math.round(x + (b[j] - x) * f)).join(',') + ')';
+        }
+      }
+      return 'rgb(255,247,205)';
+    }
+    const SEG = 200;
+    function drawRde() {
+      c.clearRect(0, 0, RW, RH);
+      const cx = RW / 2, cy = RH / 2, Rm = Math.min(RW, RH);
+      const R1 = Rm * 0.46, R2 = Rm * 0.27, step2 = Math.PI * 2 / SEG;
+      for (let i = 0; i < SEG; i++) {
+        const a = i * step2;
+        let d = (th - a) % (Math.PI * 2); if (d < 0) d += Math.PI * 2;
+        const frac = d / (Math.PI * 2);
+        let v = Math.exp(-frac * 5.5);
+        v = Math.max(v, 0.05 + 0.03 * Math.sin(a * 9 + th * 2.5));
+        c.fillStyle = cmap(v);
+        c.beginPath();
+        c.arc(cx, cy, R1, a, a + step2 + 0.014);
+        c.arc(cx, cy, R2, a + step2 + 0.014, a, true);
+        c.closePath(); c.fill();
+      }
+      c.strokeStyle = 'rgba(255,250,232,0.95)'; c.lineWidth = 2;
+      c.beginPath();
+      c.moveTo(cx + Math.cos(th) * R2, cy + Math.sin(th) * R2);
+      c.lineTo(cx + Math.cos(th) * R1, cy + Math.sin(th) * R1);
+      c.stroke();
+      const rm = (R1 + R2) / 2, gx = cx + Math.cos(th) * rm, gy = cy + Math.sin(th) * rm;
+      const g = c.createRadialGradient(gx, gy, 0, gx, gy, Rm * 0.17);
+      g.addColorStop(0, 'rgba(255,232,150,0.5)'); g.addColorStop(1, 'rgba(255,232,150,0)');
+      c.fillStyle = g; c.beginPath(); c.arc(gx, gy, Rm * 0.17, 0, 7); c.fill();
+      c.fillStyle = 'rgba(143,160,189,0.9)'; c.font = '600 11px Segoe UI, sans-serif'; c.textAlign = 'center';
+      c.fillText('Annular RDE chamber', cx, cy + 4);
+      const bw = 9, bh = RH * 0.58, bx = RW - 24, by = (RH - bh) / 2;
+      const lg = c.createLinearGradient(0, by + bh, 0, by);
+      for (let s = 0; s <= 4; s++) lg.addColorStop(s / 4, cmap(s / 4));
+      c.fillStyle = lg; c.fillRect(bx, by, bw, bh);
+      c.save(); c.translate(bx - 7, RH / 2); c.rotate(-Math.PI / 2);
+      c.fillStyle = 'rgba(143,160,189,0.9)'; c.font = '10px Segoe UI, sans-serif'; c.textAlign = 'center';
+      c.fillText('Temperature', 0, 0); c.restore();
+    }
+    function sizeRde() {
+      RW = rde.clientWidth; RH = rde.clientHeight;
+      rde.width = RW * dpr2; rde.height = RH * dpr2;
+      c.setTransform(dpr2, 0, 0, dpr2, 0, 0);
+      drawRde();
+    }
+    function loopRde() {
+      if (!rdeRunning) return;
+      th += 0.016;
+      drawRde();
+      rdeRaf = requestAnimationFrame(loopRde);
+    }
+    function setRdeRunning(on) {
+      on = on && motionOK && !document.hidden;
+      if (on && !rdeRunning) { rdeRunning = true; loopRde(); }
+      else if (!on && rdeRunning) { rdeRunning = false; if (rdeRaf) cancelAnimationFrame(rdeRaf); }
+    }
+    window.addEventListener('resize', sizeRde);
+    new IntersectionObserver(([e]) => setRdeRunning(e.isIntersecting)).observe(rde);
+    document.addEventListener('visibilitychange', () => setRdeRunning(!document.hidden));
+    sizeRde();
+    setRdeRunning(true);
+  })();
 </script>
 </body>
 </html>
