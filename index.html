@@ -15,23 +15,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     /* ============================================================
-       PALETTE — derived from the inferno colormap used in the
-       author's own RDE contour plots (violet-black → magenta →
-       flame → pale yellow). Not decoration: it IS the subject.
+       PALETTE — deep navy slate with a single amber accent.
+       The hero field renders through a BLACK-BODY RADIATION
+       colormap (dark → ember → amber → gold): the physics of
+       heat itself, matched to the UI accent.
        ============================================================ */
     :root {
-      --void:    #0A0614;   /* inferno t=0            */
-      --deep:    #120B22;   /* raised surface          */
-      --card:    #17102C;   /* card surface            */
-      --card-2:  #1C1436;   /* card hover              */
-      --line:    rgba(210,190,255,0.10);
-      --line-2:  rgba(210,190,255,0.20);
-      --magenta: #C43C6B;   /* inferno mid             */
-      --flame:   #F98C0A;   /* inferno high — accent   */
-      --hot:     #FCEFA1;   /* inferno max — highlight */
-      --text:    #EDE8F5;
-      --muted:   #9E93B8;
-      --dim:     #6E6488;
+      --void:    #0A0F1C;   /* deep navy base          */
+      --deep:    #0E1526;   /* raised surface          */
+      --card:    #131C31;   /* card surface            */
+      --card-2:  #182338;   /* card hover              */
+      --line:    rgba(148,175,222,0.12);
+      --line-2:  rgba(148,175,222,0.24);
+      --magenta: #B45309;   /* deep amber — gradient start */
+      --flame:   #F59E0B;   /* amber — primary accent  */
+      --hot:     #FCD34D;   /* gold — highlight        */
+      --text:    #E9EEF7;
+      --muted:   #A6B3CB;
+      --dim:     #74839F;
       --display: 'Syne', sans-serif;
       --body:    'Instrument Sans', system-ui, sans-serif;
       --mono:    'JetBrains Mono', ui-monospace, monospace;
@@ -42,7 +43,7 @@
     html { scroll-behavior: smooth; }
     body {
       background: var(--void); color: var(--text);
-      font-family: var(--body); line-height: 1.7; font-size: 16px;
+      font-family: var(--body); line-height: 1.7; font-size: 17px;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
@@ -70,7 +71,7 @@
     .hud-corner.bl { bottom: var(--frame); left: var(--frame); transform: scaleY(-1); }
     .hud-corner.br { bottom: var(--frame); right: var(--frame); transform: scale(-1); }
     .hud-tag {
-      position: absolute; font-family: var(--mono); font-size: 10px;
+      position: absolute; font-family: var(--mono); font-size: 11px;
       letter-spacing: 0.14em; color: var(--dim); background: var(--void);
       padding: 0 10px; white-space: nowrap;
     }
@@ -104,14 +105,14 @@
       border-bottom: 1px solid transparent;
     }
     nav.scrolled {
-      background: rgba(10,6,20,0.82); backdrop-filter: blur(14px);
+      background: rgba(10,15,28,0.85); backdrop-filter: blur(14px);
       border-color: var(--line); padding: 0.7rem 2rem;
     }
     .logo { font-family: var(--display); font-weight: 800; font-size: 1.02rem; letter-spacing: 0.02em; }
     .logo span { color: var(--flame); }
     .nav-links { display: flex; gap: 1.7rem; list-style: none; align-items: center; }
     .nav-links a {
-      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em;
+      font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.12em;
       text-transform: uppercase; color: var(--muted); position: relative;
       transition: color 0.2s;
     }
@@ -146,14 +147,14 @@
     .hero-scrim {
       position: absolute; inset: 0; pointer-events: none;
       background:
-        linear-gradient(180deg, rgba(10,6,20,0.55) 0%, rgba(10,6,20,0.05) 34%, rgba(10,6,20,0.18) 62%, rgba(10,6,20,0.86) 100%);
+        linear-gradient(180deg, rgba(10,15,28,0.55) 0%, rgba(10,15,28,0.05) 34%, rgba(10,15,28,0.18) 62%, rgba(10,15,28,0.88) 100%);
     }
     .hero-inner {
       position: relative; z-index: 2; width: 100%;
       max-width: 1180px; margin: 0 auto; padding: 0 clamp(1.4rem, 5vw, 4rem);
     }
     .hero-eyebrow {
-      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.22em;
+      font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.22em;
       text-transform: uppercase; color: var(--hot); margin-bottom: 1.1rem;
       display: flex; align-items: center; gap: 0.8rem;
     }
@@ -169,14 +170,14 @@
       -webkit-background-clip: text; background-clip: text; color: transparent;
     }
     .hero-sub {
-      color: var(--muted); font-size: clamp(0.98rem, 1.4vw, 1.12rem);
+      color: var(--muted); font-size: clamp(1.05rem, 1.5vw, 1.2rem);
       max-width: 56ch; margin-bottom: 2.2rem;
     }
     .hero-sub strong { color: var(--text); font-weight: 500; }
     .hero-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 2rem; }
     .hero-btns { display: flex; gap: 0.9rem; flex-wrap: wrap; }
     .btn {
-      font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.1em;
+      font-family: var(--mono); font-size: 0.84rem; letter-spacing: 0.1em;
       text-transform: uppercase; padding: 0.85rem 1.7rem; cursor: pointer;
       transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.25s var(--ease);
       display: inline-block; border: 1px solid transparent;
@@ -192,11 +193,11 @@
       font-family: var(--mono); border-left: 1px solid var(--line-2); padding-left: 1.4rem;
     }
     .tele { min-width: 86px; }
-    .tele .t-val { font-size: 1.05rem; color: var(--hot); font-weight: 500; font-variant-numeric: tabular-nums; }
-    .tele .t-lab { font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin-top: 0.15rem; }
+    .tele .t-val { font-size: 1.18rem; color: var(--hot); font-weight: 500; font-variant-numeric: tabular-nums; }
+    .tele .t-lab { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin-top: 0.15rem; }
     .hero-caption {
       position: absolute; z-index: 2; top: calc(var(--frame) + 78px); right: clamp(1.4rem, 4vw, 3.4rem);
-      font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em;
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em;
       color: var(--dim); text-align: right; line-height: 1.9; text-transform: uppercase;
     }
     .hero-caption b { color: var(--muted); font-weight: 500; }
@@ -207,7 +208,7 @@
     .container { max-width: 1180px; margin: 0 auto; }
     .sec-head { margin-bottom: clamp(2.2rem, 5vh, 3.4rem); }
     .sec-label {
-      font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.22em;
+      font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.22em;
       text-transform: uppercase; color: var(--flame); margin-bottom: 0.8rem;
       display: flex; align-items: center; gap: 0.8rem;
     }
@@ -216,7 +217,7 @@
       font-family: var(--display); font-weight: 700;
       font-size: clamp(1.9rem, 4.4vw, 3rem); line-height: 1.05; letter-spacing: -0.01em;
     }
-    .sec-sub { color: var(--muted); max-width: 60ch; margin-top: 0.9rem; font-size: 0.97rem; }
+    .sec-sub { color: var(--muted); max-width: 60ch; margin-top: 0.9rem; font-size: 1.04rem; }
     .alt { background: var(--deep); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 
     /* ============================================================ TICKER */
@@ -228,7 +229,7 @@
     .ticker { display: flex; width: max-content; animation: ticker 46s linear infinite; }
     .ticker-wrap:hover .ticker { animation-play-state: paused; }
     .ticker span {
-      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em;
+      font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.16em;
       text-transform: uppercase; color: var(--muted); padding: 0 1.6rem;
       display: flex; align-items: center; gap: 1.6rem; white-space: nowrap;
     }
@@ -251,15 +252,15 @@
     .portrait:hover::after { transform: translate(6px, 6px); }
     .portrait-tag {
       position: absolute; bottom: -10px; left: 12px; z-index: 1;
-      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em;
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--dim); background: var(--void);
       padding: 2px 10px; border: 1px solid var(--line);
     }
-    .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 0.98rem; }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1.04rem; }
     .about-text strong { color: var(--text); font-weight: 500; }
     .about-links { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.6rem; }
     .chip {
-      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+      font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.08em;
       color: var(--muted); border: 1px solid var(--line-2);
       padding: 0.4rem 1rem; transition: color 0.2s, border-color 0.2s, transform 0.25s var(--ease);
       display: inline-flex; align-items: center; gap: 0.5rem;
@@ -276,8 +277,8 @@
     }
     .stack-row:last-child { border-bottom: 0; }
     .stack-row:hover { background: var(--card); }
-    .stack-key { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--flame); padding-top: 0.2rem; }
-    .stack-val { color: var(--muted); font-size: 0.92rem; }
+    .stack-key { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--flame); padding-top: 0.2rem; }
+    .stack-val { color: var(--muted); font-size: 0.98rem; }
     .stack-val em { color: var(--text); font-style: normal; }
     @media (max-width: 860px) {
       .about-grid { grid-template-columns: 1fr; }
@@ -298,10 +299,10 @@
       transition: background 0.25s;
     }
     .run:hover::before { background: var(--flame); }
-    .run-date { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--flame); margin-bottom: 0.35rem; }
-    .run h3 { font-family: var(--display); font-weight: 700; font-size: 1.12rem; letter-spacing: 0.005em; }
-    .run .run-role { color: var(--muted); font-size: 0.85rem; font-family: var(--mono); margin: 0.15rem 0 0.6rem; }
-    .run p.run-desc { color: var(--muted); font-size: 0.92rem; max-width: 68ch; }
+    .run-date { font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--flame); margin-bottom: 0.35rem; }
+    .run h3 { font-family: var(--display); font-weight: 700; font-size: 1.22rem; letter-spacing: 0.005em; }
+    .run .run-role { color: var(--muted); font-size: 0.88rem; font-family: var(--mono); margin: 0.15rem 0 0.6rem; }
+    .run p.run-desc { color: var(--muted); font-size: 0.98rem; max-width: 68ch; }
 
     /* ============================================================ EDUCATION */
     .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
@@ -317,10 +318,10 @@
     }
     .edu-card:hover { transform: translateY(-4px); border-color: var(--line-2); background: var(--card-2); }
     .edu-card:hover::before { transform: scaleX(1); }
-    .edu-year { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--flame); margin-bottom: 0.6rem; }
-    .edu-card h3 { font-family: var(--display); font-size: 1.02rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .edu-card .inst { color: var(--muted); font-size: 0.82rem; margin-bottom: 0.6rem; font-family: var(--mono); }
-    .edu-card p { color: var(--muted); font-size: 0.88rem; }
+    .edu-year { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--flame); margin-bottom: 0.6rem; }
+    .edu-card h3 { font-family: var(--display); font-size: 1.12rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .edu-card .inst { color: var(--muted); font-size: 0.86rem; margin-bottom: 0.6rem; font-family: var(--mono); }
+    .edu-card p { color: var(--muted); font-size: 0.95rem; }
     .edu-card p strong { color: var(--hot); font-weight: 500; }
 
     /* ============================================================ PROJECTS */
@@ -333,7 +334,7 @@
     .gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: saturate(1.05); transition: transform 0.6s var(--ease); }
     .gallery figure:hover img { transform: scale(1.03); }
     .gallery figcaption {
-      padding: 0.8rem 1.2rem; font-family: var(--mono); font-size: 0.68rem;
+      padding: 0.8rem 1.2rem; font-family: var(--mono); font-size: 0.74rem;
       letter-spacing: 0.08em; color: var(--dim); border-top: 1px solid var(--line);
       text-transform: uppercase;
     }
@@ -345,13 +346,13 @@
       position: relative;
     }
     .proj:hover { transform: translateY(-5px); border-color: var(--flame); background: var(--card-2); }
-    .proj-id { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.16em; color: var(--dim); margin-bottom: 1rem; text-transform: uppercase; }
+    .proj-id { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em; color: var(--dim); margin-bottom: 1rem; text-transform: uppercase; }
     .proj-id b { color: var(--flame); font-weight: 500; }
-    .proj h3 { font-family: var(--display); font-size: 1.05rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.6rem; }
-    .proj p { color: var(--muted); font-size: 0.88rem; flex: 1; }
+    .proj h3 { font-family: var(--display); font-size: 1.14rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.6rem; }
+    .proj p { color: var(--muted); font-size: 0.95rem; flex: 1; }
     .proj-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.2rem; }
     .tag {
-      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--muted); border: 1px solid var(--line); padding: 0.18rem 0.6rem;
       transition: color 0.2s, border-color 0.2s;
     }
@@ -365,15 +366,15 @@
       transition: background 0.25s, padding 0.3s var(--ease);
     }
     .pub:hover { background: var(--card); padding-left: 1.1rem; }
-    .pub-year { font-family: var(--mono); font-size: 0.82rem; color: var(--flame); font-weight: 500; }
-    .pub h3 { font-size: 0.96rem; font-weight: 600; line-height: 1.45; margin-bottom: 0.2rem; }
-    .pub .venue { color: var(--muted); font-size: 0.82rem; font-family: var(--mono); }
+    .pub-year { font-family: var(--mono); font-size: 0.9rem; color: var(--flame); font-weight: 500; }
+    .pub h3 { font-size: 1.04rem; font-weight: 600; line-height: 1.45; margin-bottom: 0.2rem; }
+    .pub .venue { color: var(--muted); font-size: 0.86rem; font-family: var(--mono); }
     .pub-status {
-      font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--hot); border: 1px solid rgba(252,239,161,0.3); padding: 0.22rem 0.7rem; white-space: nowrap;
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--hot); border: 1px solid rgba(252,211,77,0.35); padding: 0.22rem 0.7rem; white-space: nowrap;
     }
     .pub-link {
-      font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase;
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--flame); border: 1px solid var(--line-2); padding: 0.22rem 0.8rem; white-space: nowrap;
       transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
@@ -390,9 +391,9 @@
       transition: transform 0.35s var(--ease), border-color 0.3s;
     }
     .blog-card:hover { transform: translateY(-5px); border-color: var(--line-2); }
-    .blog-meta { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--flame); margin-bottom: 0.8rem; }
-    .blog-card h3 { font-family: var(--display); font-size: 1.02rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.5rem; }
-    .blog-card p { color: var(--muted); font-size: 0.87rem; }
+    .blog-meta { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--flame); margin-bottom: 0.8rem; }
+    .blog-card h3 { font-family: var(--display); font-size: 1.12rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.5rem; }
+    .blog-card p { color: var(--muted); font-size: 0.94rem; }
     .blog-soon { border: 1px dashed var(--line-2); background: transparent; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
 
     /* ============================================================ CONTACT */
@@ -413,7 +414,7 @@
     footer {
       border-top: 1px solid var(--line); padding: 2rem clamp(1.4rem, 5vw, 4rem) calc(2rem + var(--frame));
       display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;
-      font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; color: var(--dim);
+      font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.1em; color: var(--dim);
       text-transform: uppercase;
     }
     footer a { color: var(--muted); transition: color 0.2s; }
@@ -422,7 +423,7 @@
     .to-top {
       position: fixed; bottom: calc(var(--frame) + 16px); right: calc(var(--frame) + 16px); z-index: 250;
       width: 42px; height: 42px; border: 1px solid var(--line-2); cursor: pointer;
-      background: rgba(10,6,20,0.85); backdrop-filter: blur(8px); color: var(--flame); font-size: 1rem;
+      background: rgba(10,15,28,0.85); backdrop-filter: blur(8px); color: var(--flame); font-size: 1rem;
       opacity: 0; visibility: hidden; transform: translateY(10px);
       transition: opacity 0.3s, transform 0.3s, visibility 0.3s, border-color 0.2s;
       font-family: var(--mono);
@@ -446,7 +447,7 @@
       .nav-links {
         display: none; position: absolute; top: 100%; left: 0; right: 0;
         flex-direction: column; align-items: flex-start; gap: 1.1rem;
-        background: rgba(10,6,20,0.97); backdrop-filter: blur(16px);
+        background: rgba(10,15,28,0.97); backdrop-filter: blur(16px);
         padding: 1.6rem; border-bottom: 1px solid var(--line);
       }
       .nav-links.open { display: flex; }
@@ -492,7 +493,7 @@
   <div class="hero-caption">
     <b>Fig. 0</b> — unwrapped annular chamber<br />
     detonation front + expansion tail<br />
-    live · inferno colormap · move your cursor
+    live · black-body colormap · move your cursor
   </div>
 
   <div class="hero-inner">
@@ -815,7 +816,7 @@
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <div>© 2026 Sunny Raghav · von Kármán Institute for Fluid Dynamics</div>
-  <div>Hosted on <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> · colormap: inferno</div>
+  <div>Hosted on <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> · colormap: black-body</div>
 </footer>
 
 <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
@@ -905,7 +906,7 @@
      A detonation front sweeps left→right with an exponential
      expansion tail, a fresh-mixture fill wedge ahead of it, and
      an oblique shock trailing above — the canonical RDE contour
-     plot, rendered through the inferno colormap in real time.
+     plot, rendered through a black-body colormap in real time.
      The field is computed on a coarse grid (like a real CFD
      mesh) and upscaled. Mouse = a moving hot-spot perturbation.
      ═══════════════════════════════════════════════════════════ */
@@ -914,12 +915,11 @@
   const hudGrid = document.getElementById('hudGrid');
   const ctx = canvas.getContext('2d');
 
-  // inferno colormap → 256-entry LUT
+  // black-body radiation colormap → 256-entry LUT
   const stops = [
-    [0.00,   0,   0,   4], [0.13,  27,  12,  65], [0.25,  74,  12, 107],
-    [0.38, 120,  28, 109], [0.50, 165,  44,  96], [0.63, 207,  68,  70],
-    [0.75, 237, 105,  37], [0.88, 251, 155,   6], [0.95, 247, 209,  61],
-    [1.00, 252, 255, 164]
+    [0.00,  10,  15,  28], [0.20,  44,  26,  33], [0.40, 118,  38,  25],
+    [0.58, 198,  74,  24], [0.74, 245, 158,  11], [0.88, 252, 211,  77],
+    [1.00, 255, 248, 222]
   ];
   const LUT = new Uint8Array(256 * 3);
   for (let i = 0; i < 256; i++) {
