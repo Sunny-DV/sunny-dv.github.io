@@ -108,14 +108,16 @@
       background: rgba(247,248,251,0.85); backdrop-filter: blur(14px);
       border-color: var(--line); padding: 0.7rem 2rem;
     }
-    .logo { font-family: var(--display); font-weight: 800; font-size: 1.02rem; letter-spacing: 0.02em; }
+    .logo { font-family: var(--display); font-weight: 800; font-size: 1.02rem; letter-spacing: 0.02em; color: #F4F6FB; transition: color 0.35s; }
+    nav.scrolled .logo { color: var(--text); }
     .logo span { color: var(--flame); }
     .nav-links { display: flex; gap: 1.7rem; list-style: none; align-items: center; }
     .nav-links a {
       font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--muted); position: relative;
+      text-transform: uppercase; color: rgba(233,238,247,0.75); position: relative;
       transition: color 0.2s;
     }
+    nav.scrolled .nav-links a { color: var(--muted); }
     .nav-links a:not(.nav-cta)::after {
       content: ''; position: absolute; left: 0; bottom: -5px; height: 1px; width: 0;
       background: var(--flame); transition: width 0.3s var(--ease);
@@ -126,9 +128,10 @@
       border: 1px solid var(--flame); color: var(--flame) !important;
       padding: 0.42rem 1.05rem; transition: background 0.2s, color 0.2s !important;
     }
-    .nav-cta:hover { background: var(--flame); color: var(--void) !important; }
+    .nav-cta:hover { background: var(--flame); color: #FFFFFF !important; }
     .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; background: none; border: 0; padding: 6px; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); transition: transform 0.3s, opacity 0.3s; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #F4F6FB; transition: transform 0.3s, opacity 0.3s, background 0.35s; }
+    nav.scrolled .hamburger span { background: var(--text); }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -139,16 +142,28 @@
       display: flex; align-items: flex-end;
       position: relative; overflow: hidden;
       padding: 0 0 clamp(3rem, 8vh, 6rem);
+      background: #0A0F1C; /* shows while video loads */
     }
     #field {
       position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
       display: block;
     }
     .hero-scrim {
       position: absolute; inset: 0; pointer-events: none;
       background:
-        linear-gradient(180deg, rgba(247,248,251,0.55) 0%, rgba(247,248,251,0.05) 34%, rgba(247,248,251,0.15) 62%, rgba(247,248,251,0.92) 100%);
+        linear-gradient(180deg, rgba(10,15,28,0.72) 0%, rgba(10,15,28,0.28) 30%, rgba(10,15,28,0.4) 60%, rgba(10,15,28,0.88) 100%);
     }
+    /* the video is dark, so hero copy switches to light-on-dark locally */
+    #hero .hero-eyebrow { color: var(--hot); }
+    #hero .hero-eyebrow::before { background: var(--flame); }
+    #hero h1 { color: #F4F6FB; }
+    #hero .hero-sub { color: rgba(233,238,247,0.72); }
+    #hero .hero-sub strong { color: #FFFFFF; }
+    #hero .btn-outline { border-color: rgba(233,238,247,0.35); color: #F4F6FB; }
+    #hero .btn-outline:hover { border-color: var(--flame); color: var(--hot); }
+    #hero .hero-caption { color: rgba(233,238,247,0.45); }
+    #hero .hero-caption b { color: rgba(233,238,247,0.75); }
     .hero-inner {
       position: relative; z-index: 2; width: 100%;
       max-width: 1180px; margin: 0 auto; padding: 0 clamp(1.4rem, 5vw, 4rem);
@@ -227,57 +242,6 @@
     }
     .ticker span::after { content: '◆'; color: var(--flame); font-size: 0.5rem; }
     @keyframes ticker { to { transform: translateX(-50%); } }
-
-    /* ============================================================
-       SIMULATION PANEL — a single dark "instrument" element
-       dropped onto the light page, like a live oscilloscope
-       readout sitting on a lab bench. Deliberate contrast: this
-       is the one place the site goes dark, because it's showing
-       real data, not decoration.
-       ============================================================ */
-    #sim { padding-top: clamp(3.5rem, 8vh, 5.5rem); padding-bottom: clamp(3.5rem, 8vh, 5.5rem); }
-    .sim-panel {
-      position: relative; background: #0A0F1C; border: 1px solid rgba(217,83,11,0.35);
-      overflow: hidden;
-    }
-    .sim-corner { position: absolute; width: 20px; height: 20px; z-index: 2; }
-    .sim-corner::before, .sim-corner::after { content: ''; position: absolute; background: var(--flame); }
-    .sim-corner::before { width: 20px; height: 1px; }
-    .sim-corner::after  { width: 1px; height: 20px; }
-    .sim-corner.tl { top: -1px; left: -1px; }
-    .sim-corner.tr { top: -1px; right: -1px; transform: scaleX(-1); }
-    .sim-corner.bl { bottom: -1px; left: -1px; transform: scaleY(-1); }
-    .sim-corner.br { bottom: -1px; right: -1px; transform: scale(-1); }
-    .sim-tag {
-      position: absolute; z-index: 2; font-family: var(--mono); font-size: 0.68rem;
-      letter-spacing: 0.14em; text-transform: uppercase; color: rgba(233,238,247,0.55);
-      top: 14px; left: 20px;
-    }
-    .sim-tag b { color: var(--flame); font-weight: 500; }
-    .sim-live {
-      position: absolute; z-index: 2; top: 14px; right: 20px;
-      font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em;
-      text-transform: uppercase; color: rgba(233,238,247,0.55);
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-    .sim-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--flame); animation: simPulse 1.8s ease-in-out infinite; }
-    @keyframes simPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
-    .sim-video-wrap { width: 100%; line-height: 0; padding: 44px 0 0; }
-    .sim-video-wrap video { width: 100%; display: block; background: #0A0F1C; }
-    .sim-caption {
-      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.8rem;
-      padding: 0.9rem 20px 1.05rem; border-top: 1px solid rgba(233,238,247,0.12);
-      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em;
-      color: rgba(233,238,247,0.5);
-    }
-    .sim-caption b { color: rgba(233,238,247,0.85); font-weight: 500; }
-    .sim-below { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; margin-top: 1.4rem; flex-wrap: wrap; }
-    .sim-below p { color: var(--muted); font-size: 0.98rem; max-width: 62ch; }
-    @media (max-width: 700px) {
-      .sim-tag, .sim-live { position: static; display: inline-flex; }
-      .sim-video-wrap { padding-top: 0; }
-      .sim-tag { padding: 12px 20px 0; } .sim-live { padding: 4px 20px 12px; }
-    }
 
     /* ============================================================ ABOUT */
     .about-grid { display: grid; grid-template-columns: 300px 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
@@ -494,6 +458,7 @@
         padding: 1.6rem; border-bottom: 1px solid var(--line);
       }
       .nav-links.open { display: flex; }
+      .nav-links.open a { color: var(--muted); }
       .hamburger { display: flex; }
     }
   </style>
@@ -509,7 +474,7 @@
   <div class="hud-tag hud-tl">S.RAGHAV <em>/</em> <b>RDE-SIM</b> <em>/</em> WAVE-ATTACHED FRAME</div>
   <div class="hud-tag hud-tr">θ = <b id="hudTheta">000.0°</b></div>
   <div class="hud-tag hud-bl">PROBE: <b id="hudProbe">HERO</b></div>
-  <div class="hud-tag hud-br"><em>GRID</em> <b id="hudGrid">—</b> · <em>Δt</em> 16 ms</div>
+  <div class="hud-tag hud-br"><em>SOLVER</em> <b>HSCFOAM</b> · <em>Δt</em> 16 ms</div>
 </div>
 
 <!-- ═══ NAV ═══ -->
@@ -527,15 +492,15 @@
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- ═══ HERO · live unwrapped-RDE contour field ═══ -->
+<!-- ═══ HERO · live unwrapped-RDE simulation background ═══ -->
 <section id="hero">
-  <canvas id="field" aria-hidden="true"></canvas>
+  <video id="field" src="rde_hero.mp4" poster="rde_hero_poster.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
   <div class="hero-scrim"></div>
 
   <div class="hero-caption">
     <b>Fig. 0</b> — unwrapped annular chamber<br />
     detonation front + expansion tail<br />
-    live · temperature contour · move your cursor
+    live · HSCFoam · OpenFOAM–Cantera
   </div>
 
   <div class="hero-inner">
@@ -561,34 +526,6 @@
     <span>OpenFOAM</span><span>Cantera</span><span>C++</span><span>Python</span><span>Detailed chemistry</span><span>HLLC / AUSM</span><span>AMD EPYC · AVX-512</span><span>MPI · domain decomposition</span><span>PyTorch</span><span>PINNs</span><span>ParaView</span><span>Apptainer / HPC</span><span>ANSYS Fluent</span><span>Star-CCM+</span>
   </div>
 </div>
-
-<!-- ═══ SIMULATION ═══ -->
-<section id="sim">
-  <div class="container">
-    <div class="sim-panel reveal">
-      <div class="sim-corner tl"></div><div class="sim-corner tr"></div>
-      <div class="sim-corner bl"></div><div class="sim-corner br"></div>
-      <div class="sim-tag">FIG. 0 · <b>2D UNWRAPPED RDE</b> · ANNULAR CHAMBER</div>
-      <div class="sim-live"><span class="sim-dot"></span>ParaView render · looped</div>
-      <div class="sim-video-wrap">
-        <video
-          src="rde_hero.mp4"
-          poster="rde_hero_poster.jpg"
-          autoplay muted loop playsinline
-          aria-label="2D unwrapped rotating detonation engine simulation, temperature and mixing field, one wave period looped">
-        </video>
-      </div>
-      <div class="sim-caption">
-        <span>Detonation front + expansion tail, unwrapped azimuthal coordinate</span>
-        <span><b>HSCFoam</b> · OpenFOAM–Cantera</span>
-      </div>
-    </div>
-    <div class="sim-below reveal">
-      <p>A single detonation wave sweeping the unwrapped annulus of a rotating detonation engine — temperature and mixing structure resolved with detailed finite-rate chemistry, post-processed and rendered in ParaView.</p>
-      <a href="#projects" class="btn btn-outline">More on this work</a>
-    </div>
-  </div>
-</section>
 
 <!-- ═══ ABOUT ═══ -->
 <section id="about">
@@ -880,7 +817,7 @@
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <div>© 2026 Sunny Raghav · von Kármán Institute for Fluid Dynamics</div>
-  <div>Hosted on <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> · colormap: thermal</div>
+  <div>Hosted on <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> · simulation rendered in ParaView</div>
 </footer>
 
 <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
@@ -950,135 +887,21 @@
   }, { rootMargin: '-45% 0px -50% 0px' });
   document.querySelectorAll('section[id]').forEach(s => spy.observe(s));
 
-  /* ═══════════════════════════════════════════════════════════
-     HERO FIELD — a live "unwrapped" rotating detonation engine.
-     x = azimuthal coordinate (periodic), y = axial coordinate.
-     A detonation front sweeps left→right with an exponential
-     expansion tail, a fresh-mixture fill wedge ahead of it, and
-     an oblique shock trailing above — the canonical RDE contour
-     plot, rendered as a light-background thermal contour in real time.
-     The field is computed on a coarse grid (like a real CFD
-     mesh) and upscaled. Mouse = a moving hot-spot perturbation.
-     ═══════════════════════════════════════════════════════════ */
-  const canvas = document.getElementById('field');
+  /* ── Hero simulation video: pause off-screen/tab-hidden, respect reduced motion ── */
+  const heroVideo = document.getElementById('field');
   const hero = document.getElementById('hero');
-  const hudGrid = document.getElementById('hudGrid');
-  const ctx = canvas.getContext('2d');
-
-  // light-background temperature colormap → 256-entry LUT
-  // (paper → pale gold → amber → ember → deep maroon)
-  const stops = [
-    [0.00, 247, 248, 251], [0.18, 252, 235, 205], [0.38, 246, 176,  72],
-    [0.58, 230, 104,  22], [0.78, 190,  46,  12], [1.00,  96,  16,  22]
-  ];
-  const LUT = new Uint8Array(256 * 3);
-  for (let i = 0; i < 256; i++) {
-    const v = i / 255;
-    let k = 1; while (k < stops.length - 1 && stops[k][0] < v) k++;
-    const a = stops[k - 1], b = stops[k];
-    const f = (v - a[0]) / (b[0] - a[0] || 1);
-    LUT[i * 3]     = a[1] + (b[1] - a[1]) * f;
-    LUT[i * 3 + 1] = a[2] + (b[2] - a[2]) * f;
-    LUT[i * 3 + 2] = a[3] + (b[3] - a[3]) * f;
-  }
-
-  let GW = 0, GH = 0, off, offCtx, img, running = false, raf = null, t = 0;
-  const CELL = 5;                       // px per grid cell (coarse, like a mesh)
-  const mouse = { x: -1, y: -1, heat: 0 };
-
-  function resize() {
-    const W = hero.clientWidth, H = hero.clientHeight;
-    canvas.width = W; canvas.height = H;
-    GW = Math.max(60, Math.round(W / CELL));
-    GH = Math.max(40, Math.round(H / CELL));
-    off = document.createElement('canvas');
-    off.width = GW; off.height = GH;
-    offCtx = off.getContext('2d');
-    img = offCtx.createImageData(GW, GH);
-    hudGrid.textContent = GW + '\u00D7' + GH;
-    if (!motionOK) drawFrame(0);        // static frame for reduced motion
-  }
-
-  function drawFrame(time) {
-    const d = img.data;
-    const front = (time * 0.11) % 1;    // wave position, sweeps the annulus
-    const mx = mouse.x / canvas.width, my = mouse.y / canvas.height;
-    for (let j = 0; j < GH; j++) {
-      const yn = j / GH;                // 0 = top (exit), 1 = bottom (injection)
-      for (let i = 0; i < GW; i++) {
-        const xn = i / GW;
-        // distance behind the front (periodic in x)
-        let db = front - xn; if (db < 0) db += 1;
-
-        // detonation front + exponential expansion tail
-        let v = Math.exp(-db * 6.5);
-
-        // fresh-mixture fill wedge ahead of the wave (cold, dark)
-        const fill = 0.62 + 0.3 * db;   // fill height grows with time since wave passage
-        if (yn > fill) v = Math.max(v * 0.25, 0.045);
-
-        // oblique shock trailing up-and-back from the front tip
-        const so = db * 0.9;            // shock slope
-        const sd = Math.abs((1 - yn) - (0.38 + so));
-        if (db > 0.03 && db < 0.75) v += 0.18 * Math.exp(-sd * sd * 240) * Math.exp(-db * 2.2);
-
-        // injection ripple along the bottom (discrete injector jets)
-        v += 0.05 * Math.exp(-(1 - yn) * 9) * (0.5 + 0.5 * Math.sin(xn * 70 + time * 2.1));
-
-        // gentle background turbulence
-        v += 0.045 * Math.sin(xn * 21 + time * 0.8) * Math.cos(yn * 17 - time * 0.6);
-
-        // mouse perturbation — a hot spot you drag through the field
-        if (mouse.heat > 0.01) {
-          let dx = xn - mx; if (dx > 0.5) dx -= 1; if (dx < -0.5) dx += 1;
-          const dy = yn - my;
-          v += mouse.heat * Math.exp(-(dx * dx * 55 + dy * dy * 30) * 8);
-        }
-
-        const c = Math.max(0, Math.min(255, v * 255)) | 0;
-        const p = (j * GW + i) * 4;
-        d[p] = LUT[c * 3]; d[p + 1] = LUT[c * 3 + 1]; d[p + 2] = LUT[c * 3 + 2]; d[p + 3] = 255;
-      }
-    }
-    offCtx.putImageData(img, 0, 0);
-    ctx.imageSmoothingEnabled = true;
-    ctx.drawImage(off, 0, 0, canvas.width, canvas.height);
-  }
-
-  function loop() {
-    if (!running) return;
-    t += 0.016;
-    mouse.heat *= 0.94;                 // perturbation decays, like a real transient
-    drawFrame(t);
-    raf = requestAnimationFrame(loop);
-  }
-  function setRunning(on) {
-    on = on && motionOK && !document.hidden;
-    if (on && !running) { running = true; loop(); }
-    else if (!on && running) { running = false; if (raf) cancelAnimationFrame(raf); }
-  }
-
-  hero.addEventListener('pointermove', e => {
-    const r = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-    mouse.heat = Math.min(1, mouse.heat + 0.18);
-  }, { passive: true });
-
-  new IntersectionObserver(([e]) => setRunning(e.isIntersecting)).observe(hero);
-  document.addEventListener('visibilitychange', () => setRunning(!document.hidden));
-  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 150); });
-
-  resize();
-  setRunning(true);
-
-  /* ── Simulation panel video: pause off-screen, respect reduced motion ── */
-  const simVideo = document.querySelector('.sim-video-wrap video');
-  if (simVideo) {
-    if (!motionOK) { simVideo.removeAttribute('autoplay'); simVideo.pause(); }
-    else {
+  if (heroVideo) {
+    if (!motionOK) {
+      heroVideo.removeAttribute('autoplay');
+      heroVideo.pause();
+    } else {
+      const tryPlay = () => heroVideo.play().catch(() => {});
       new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) simVideo.play().catch(() => {}); else simVideo.pause(); });
-      }, { threshold: 0.15 }).observe(simVideo);
+        entries.forEach(e => { if (e.isIntersecting) tryPlay(); else heroVideo.pause(); });
+      }, { threshold: 0.1 }).observe(hero);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) heroVideo.pause(); else tryPlay();
+      });
     }
   }
 })();
